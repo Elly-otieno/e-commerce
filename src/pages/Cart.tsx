@@ -1,6 +1,10 @@
+import CartClient from "../components/general/CartClient"
+
 const Cart = () => {
   return (
-    <div>Cart</div>
+    <div className="w-full">
+        <CartClient />
+    </div>
   )
 }
 
