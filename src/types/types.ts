@@ -22,3 +22,11 @@ export interface Product {
     };
     discountPercentage?: number;
   }
+
+
+  export interface Order {
+    id: number;
+    customerName: string;
+    totalPrice: number;
+    status: "Processing" | "Shipped";
+  }

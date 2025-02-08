@@ -19,6 +19,8 @@ const Input: React.FC<InputProps> = ({
   register,
   errors,
 }) => {
+
+    //TO-DO REMOVE
   return (
     <div className="w-full relative">
       <input

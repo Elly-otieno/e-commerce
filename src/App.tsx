@@ -5,9 +5,11 @@ import { CartContextProvider } from "./hooks/useCart";
 import Router from "./router/Router";
 import { useLocation } from "react-router";
 import Nav from "./components/general/Nav";
+import { useAuth } from "./contexts/AuthContext";
 
 const App = () => {
-  const location = useLocation()
+  const location = useLocation();
+  const { user } = useAuth();
 
   const showNavOn = ['/dashboard', '/dashboard/add-products', '/dashboard/manage-products', '/dashboard/manage-orders']
   return (
@@ -21,7 +23,7 @@ const App = () => {
       <CartContextProvider>
         <div className="flex flex-col  min-h-screen">
           <Header />
-          {showNavOn.includes(location.pathname) && <Nav/>}
+          {showNavOn.includes(location.pathname) && user?.isAdmin && <Nav />}
           <main className="my-6 xl:px-20 md:px-2 px-4 flex-grow">
             <Router />
           </main>

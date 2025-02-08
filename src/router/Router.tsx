@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
 import Landing from "../pages/Landing";
-import Product from "../pages/Product";
+import Products from "../pages/Products";
 import DashboardIndex from "../pages/dashboard/DashboardIndex";
 import UsersList from "../pages/dashboard/UsersList";
 import PATHS from "./paths";
@@ -17,7 +17,7 @@ const Router = () => {
   return (
     <Routes>
       <Route path={PATHS.landing} element={<Landing />} />
-      <Route path={PATHS.products.index} element={<Product />} />
+      <Route path={PATHS.products.index} element={<Products />} />
       <Route path={PATHS.products.product} element={<SingleProduct />} />
       <Route path={PATHS.login} element={<Login />} />
       <Route path={PATHS.cart} element={<Cart />} />

@@ -11,14 +11,14 @@ const Nav = () => {
                     <Link to={'/dashboard'}>
                         <NavItem label="Summary" icon={TableOfContents} selected={location.pathname === '/admin'}/>
                     </Link>
-                    <Link to={'/dashboard/add-products'}>
-                        <NavItem label="AddProducts" icon={ClipboardPlus} selected={location.pathname === '/admin/add-products'}/>
-                    </Link>
                     <Link to={'/dashboard/manage-products'}>
                         <NavItem label="ManageProducts" icon={FolderKanban} selected={location.pathname === '/admin/manage-products'}/>
                     </Link>
                     <Link to={'/dashboard/manage-orders'}>
                         <NavItem label="ManageOrders" icon={ArrowUpDown} selected={location.pathname === '/admin/manage-orders'}/>
+                    </Link>
+                    <Link to={'/dashboard/add-products'}>
+                        <NavItem label="AddProducts" icon={ClipboardPlus} selected={location.pathname === '/admin/add-products'}/>
                     </Link>
                 </div>
             </div>

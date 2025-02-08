@@ -1,12 +1,14 @@
 import { Link } from "react-router";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { ShoppingCart, Menu, X, LogOut, User } from "lucide-react";
+import { ShoppingCart, Menu, X, LogOut, User, LayoutDashboard } from "lucide-react";
 import { useCart } from "../../hooks/useCart";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
   const { cartTotalQty } = useCart();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -21,43 +23,18 @@ const Navbar = () => {
 
         {/* Navigation Links for large screens */}
         <div className="hidden md:flex space-x-8">
-          <Link to="/" className="hover:text-gray-200 transition duration-200">
+          <Link to="/" className="hover:text-cyan-900 transition duration-200">
             Home
           </Link>
           <Link
             to="/products"
-            className="hover:text-gray-200 transition duration-200"
+            className="hover:text-cyan-900 transition duration-200"
           >
-            Products
+            Featured
           </Link>
-          <Link
-            to="/about"
-            className="hover:text-gray-200 transition duration-200"
-          >
-            About
-          </Link>
-
-          {isAuthenticated ? (
-            <button
-              onClick={logout}
-              className="hover:text-gray-200 transition duration-200"
-            >
-              {/* <LogOut size={20} /> */}
-              <span>Sign Out</span>
-            </button>
-          ) : (
-            <Link
-              to="/login" state={{ from: location.pathname }}
-              className="hover:text-gray-200 transition duration-200 hover:underline"
-            >
-              {/* <User size={20} /> */}
-              <span>Sign Up</span>
-            </Link>
-          )}
         </div>
 
-        {/* Cart Icon */}
-        <div className="relative">
+        <div className="relative flex gap-4 justify-center items-center">
           <Link to="/cart">
             <ShoppingCart size={24} />
             {cartTotalQty > 0 && (
@@ -66,6 +43,48 @@ const Navbar = () => {
               </span>
             )}
           </Link>
+
+          <div className="relative" ref={menuRef}>
+      {/* User Icon */}
+      <div
+        className="flex items-center justify-center p-2 bg-white rounded-full cursor-pointer hover:bg-gray-200 transition"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <User size={20} />
+      </div>
+
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border p-2">
+          <Link
+            to="/dashboard"
+            className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded"
+          >
+            <LayoutDashboard size={18} className="mr-2" />
+            Dashboard
+          </Link>
+          <div className="border-t my-2"></div>
+          {isAuthenticated ? (
+            <button
+              onClick={logout}
+              className="flex items-center p-2 w-full text-red-500 hover:bg-gray-100 rounded"
+            >
+              <LogOut size={18} className="mr-2" />
+              Logout 
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              state={{ from: location.pathname }}
+              className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded"
+            >
+              <User size={18} className="mr-2" />
+              Login
+            </Link>
+          )}
+        </div>
+      )}
+    </div>
         </div>
 
         {/* Hamburger Menu for Mobile */}
@@ -84,38 +103,57 @@ const Navbar = () => {
         <div className="md:hidden px-4 py-2 space-y-4 bg-slate-200">
           <Link
             to="/"
-            className="block text-white hover:text-gray-200 transition duration-200"
+            className="block text-white hover:text-cyan-900 transition duration-200"
           >
             Home
           </Link>
           <Link
             to="/products"
-            className="block text-white hover:text-gray-200 transition duration-200"
+            className="block text-white hover:text-cyan-900 transition duration-200"
           >
-            Products
+            Featured
           </Link>
-          <Link
-            to="/about"
-            className="block text-white hover:text-gray-200 transition duration-200"
-          >
-            About
-          </Link>
+          <div className="relative" ref={menuRef}>
+      {/* User Icon */}
+      <div
+        className="flex items-center justify-center p-2 bg-white rounded-full cursor-pointer hover:bg-gray-200 transition"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <User size={20} />
+      </div>
 
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border p-2">
+          <Link
+            to="/dashboard"
+            className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded"
+          >
+            <LayoutDashboard size={18} className="mr-2" />
+            Dashboard
+          </Link>
+          <div className="border-t my-2"></div>
           {isAuthenticated ? (
             <button
               onClick={logout}
-              className="block text-white hover:text-gray-200 transition duration-200"
+              className="flex items-center p-2 w-full text-red-500 hover:bg-gray-100 rounded"
             >
-              <LogOut size={20} />
+              <LogOut size={18} className="mr-2" />
+              Logout 
             </button>
           ) : (
             <Link
-              to="/login" state={{ from: location.pathname }}
-              className="block text-white hover:text-gray-200 transition duration-200"
+              to="/login"
+              state={{ from: location.pathname }}
+              className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded"
             >
-              <User size={20} />
+              <User size={18} className="mr-2" />
+              Login
             </Link>
           )}
+        </div>
+      )}
+    </div>
         </div>
       )}
     </nav>

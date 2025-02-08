@@ -4,7 +4,7 @@ interface ButtonProps{
     outline?: boolean,
     small?: boolean,
     custom?: string,
-    // icon?: React.ReactNode,
+    icon?: any,
     onclick: any;
 }
 
@@ -14,7 +14,7 @@ const Button: React.FC<ButtonProps> = ({
     outline,
     small,
     custom,
-    // icon: Icon ,
+    icon: Icon ,
     onclick
 }) => {
     return ( 
@@ -26,8 +26,9 @@ const Button: React.FC<ButtonProps> = ({
         ${custom ? custom : null}`}
         onClick={onclick}
         >
-        {/* {Icon && <Icon size={24}/>} */}
-        {label}
+            {label}
+        {Icon && <Icon size={24}/>}
+        
     </button> );
 }
  
