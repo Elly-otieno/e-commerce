@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router";
 import Landing from "../pages/Landing";
 import Products from "../pages/Products";
 import DashboardIndex from "../pages/dashboard/DashboardIndex";
-import UsersList from "../pages/dashboard/UsersList";
 import PATHS from "./paths";
 import PrivateRoute from "./PrivateRoute";
 import Login from "../pages/Login";
@@ -24,7 +23,6 @@ const Router = () => {
       <Route path={PATHS.error} element={<NotFound />} />
       <Route element={<PrivateRoute />}>
         <Route path={PATHS.dashboard.index} element={<DashboardIndex />} />
-        <Route path={PATHS.dashboard.usersList} element={<UsersList />} />
         <Route path={PATHS.dashboard.addProducts} element={<AddProducts />} />
         <Route path={PATHS.dashboard.manageProducts} element={<ManageProducts />} />
         <Route path={PATHS.dashboard.manageOrders} element={<ManageOrders />} />

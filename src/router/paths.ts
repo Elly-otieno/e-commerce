@@ -8,7 +8,6 @@ const PATHS = {
     cart: "/cart",
     dashboard: {
         index: "/dashboard",
-        usersList: "/dashboard/users",
         addProducts: "/dashboard/add-products",
         manageProducts: "/dashboard/manage-products",
         manageOrders: "/dashboard/manage-orders",

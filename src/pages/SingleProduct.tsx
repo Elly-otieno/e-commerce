@@ -7,33 +7,52 @@ import ProductDetails from "../components/general/ProductDetails";
 const SingleProduct = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState<boolean>(true); 
 
   useEffect(() => {
     const findProduct = async () => {
-      if (!id) return; // Ensure id exists before proceeding
+      if (!id) return;
+
+      const productId = Number(id);
+      if (isNaN(productId)) {
+        console.error("Invalid product ID");
+        setLoading(false);
+        return;
+      }
 
       try {
-        const productId = Number(id);
-        if (isNaN(productId)) throw new Error("Invalid product ID");
-
+        setLoading(true); 
         const data = await getProductById(productId);
-
-        if (!data || typeof data !== "object" || data === null) {
+        if (data && typeof data === "object") {
+          setProduct(data);
+        } else {
           throw new Error("Invalid product data received.");
         }
-
-        setProduct(data);
       } catch (err) {
         console.error("Error fetching product:", err);
+      } finally {
+        setLoading(false); 
       }
     };
 
     findProduct();
   }, [id]);
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-lg font-semibold">Loading product...</p>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <ProductDetails product={product} />
+      {product ? (
+        <ProductDetails product={product} />
+      ) : (
+        <p className="text-center text-red-500">Product not found.</p>
+      )}
     </div>
   );
 };

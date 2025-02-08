@@ -1,54 +1,3 @@
-
-
-// const Featured: React.FC = () => {
-//   // Use React.FC for type safety
-//   const [products, setProducts] = useState<Product[]>([]);
-//   const [loading, setLoading] = useState<boolean>(true);
-//   const [error, setError] = useState<Error | null>(null);
-//   const [countdown, setCountdown] = useState<number>(
-//     3 * 24 * 3600 + 23 * 3600 + 19 * 60 + 56
-//   );
-
-
-
-//   const formatCountdown = (seconds: number) => {
-//     const days = Math.floor(seconds / (3600 * 24));
-//     const hours = Math.floor((seconds % (3600 * 24)) / 3600);
-//     const minutes = Math.floor((seconds % 3600) / 60);
-//     const remainingSeconds = seconds % 60;
-//     return `${days.toString().padStart(2, "0")}d ${hours
-//       .toString()
-//       .padStart(2, "0")}h ${minutes
-//       .toString()
-//       .padStart(2, "0")}m ${remainingSeconds.toString().padStart(2, "0")}s`;
-//   };
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setCountdown((prevCountdown) => prevCountdown - 1);
-//       if (countdown <= 0) {
-//         clearInterval(interval);
-//         // Handle countdown end (e.g., refresh products)
-//       }
-//     }, 1000);
-
-//     return () => clearInterval(interval); // Clean up on unmount
-//   }, [countdown]);
-
-//   return (
-//     <div className="container mx-auto py-12">
-//       <div className="flex justify-between items-center mb-8">
-//         <h2 className="text-2xl font-semibold">
-//           <span className="bg-red-500 text-white px-2 py-1 rounded-md mr-2">
-//             Today's
-//           </span>{" "}
-//           Flash Sales
-//         </h2>
-//         <div className="text-lg font-medium">
-//           {formatCountdown(countdown > 0 ? countdown : 0)}
-//         </div>
-//       </div>
-
 import { useState, useEffect } from "react";
 import { getProducts } from "../../utils/getProducts";
 import ProductCard from "../general/ProductCard";
@@ -57,15 +6,23 @@ import { useNavigate } from "react-router";
 import Button from "../general/Button";
 import { ArrowRight } from "lucide-react";
 
+const INITIAL_COUNTDOWN = 14 * 24 * 3600 + 23 * 3600 + 19 * 60 + 56;
+
 const Featured = () => {
   const [products, setProducts] = useState<Product[] | null>(
     JSON.parse(localStorage.getItem("products") || "null")
   );
-
   const [randomProducts, setRandomProducts] = useState<Product[]>([]);
-    const [countdown, setCountdown] = useState<number>(
-    3 * 24 * 3600 + 23 * 3600 + 19 * 60 + 56
-  );
+  const [countdown, setCountdown] = useState<number>(() => {
+    const storedTime = localStorage.getItem("flashSaleEndTime");
+    if (storedTime) {
+      const remainingTime = Math.floor(
+        (parseInt(storedTime) - Date.now()) / 1000
+      );
+      return remainingTime > 0 ? remainingTime : INITIAL_COUNTDOWN;
+    }
+    return INITIAL_COUNTDOWN;
+  });
 
   const navigate = useNavigate();
 
@@ -94,13 +51,12 @@ const Featured = () => {
     fetchProducts();
   }, [products]);
 
-  // select 6 random products
   const updateRandomProducts = (allProducts: Product[]) => {
     const shuffled = allProducts.sort(() => 0.5 - Math.random()); // Shuffle the array
     setRandomProducts(shuffled.slice(0, 6)); // Pick first 6 items
   };
 
-    const formatCountdown = (seconds: number) => {
+  const formatCountdown = (seconds: number) => {
     const days = Math.floor(seconds / (3600 * 24));
     const hours = Math.floor((seconds % (3600 * 24)) / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -113,31 +69,44 @@ const Featured = () => {
   };
 
   useEffect(() => {
+    if (countdown <= 0) return;
+
     const interval = setInterval(() => {
-      setCountdown((prevCountdown) => prevCountdown - 1);
-      if (countdown <= 0) {
-        clearInterval(interval);
-        // Handle countdown end (e.g., refresh products)
-      }
+      setCountdown((prevCountdown) => {
+        const newCountdown = prevCountdown - 1;
+        if (newCountdown <= 0) {
+          clearInterval(interval);
+          localStorage.removeItem("flashSaleEndTime");
+        }
+        return newCountdown;
+      });
     }, 1000);
 
-    return () => clearInterval(interval); // Clean up on unmount
+    return () => clearInterval(interval);
+  }, [countdown]);
+
+  useEffect(() => {
+    if (countdown > 0) {
+      localStorage.setItem(
+        "flashSaleEndTime",
+        (Date.now() + countdown * 1000).toString()
+      );
+    }
   }, [countdown]);
 
   return (
     <div>
-
       <div className="flex justify-between items-center my-8">
         <h2 className="text-2xl font-semibold">
           <span className="bg-red-500 text-white px-2 py-1 rounded-md mr-2">
             Today's
-           </span>{" "}
+          </span>{" "}
           Flash Sales
         </h2>
-         <div className="text-lg font-medium">
-           {formatCountdown(countdown > 0 ? countdown : 0)}
+        <div className="text-lg font-medium">
+          {formatCountdown(countdown > 0 ? countdown : 0)}
         </div>
-    </div>
+      </div>
       <div className="grid grid-cols-2 my-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
         {randomProducts.length > 0 ? (
           randomProducts.map((product) => (
@@ -146,7 +115,7 @@ const Featured = () => {
             </div>
           ))
         ) : (
-          <div>Loading products...</div>
+          <div className="flex text-center justify-center text-slate-800">Loading products...</div>
         )}
       </div>
       <div className="flex justify-center mt-6">
