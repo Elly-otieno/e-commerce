@@ -122,7 +122,7 @@ e-commerce/
 
 
 ## Deployment
-- The application can be deployed on **Vercel** or **Netlify**.
+- Checkout live app on: https://e-commerce-eight-gamma-53.vercel.app/.
 
 ---
 
