@@ -1,7 +1,7 @@
 # Exclusive - Online Store
 
 ## Project Overview
-**Exclusive** is a fully responsive online store built with React and TypeScript. It features product management, authentication, cart functionality, filtering, and a user-friendly interface.
+**Exclusive** is a responsive online store built with React and TypeScript. It features product management, authentication, cart functionality, filtering, and a user-friendly interface.
 
 ## Features
 ### Landing Page

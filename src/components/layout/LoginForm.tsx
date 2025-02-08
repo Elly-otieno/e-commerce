@@ -27,7 +27,7 @@ const LoginForm = () => {
           <img
             src={shop}
             alt="Shopping"
-            className="object-cover"
+            className="object-cover  w-full"
           />
         </div>
 

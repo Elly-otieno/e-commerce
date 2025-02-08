@@ -1,12 +1,28 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useCart } from "../../hooks/useCart";
 import { ArrowLeftSquare } from "lucide-react";
 import Button from "./Button";
 import ItemContent from "./ItemContent";
 import { formatPrice } from "../../utils/formatPrice";
+import { useAuth } from "../../contexts/AuthContext";
+import toast from "react-hot-toast";
 
 const CartClient = () => {
   const { cartProducts, handleClearCart, cartTotalAmount } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate()
+
+  const handleCheckout = () => {
+    if (!user) {
+      toast("Log in to proceed with checkout", { duration: 1000 });
+      navigate("/login");
+      return;
+    }
+
+    toast.success("You have completed your products purchase");
+    handleClearCart();
+    navigate("/");
+  };
 
   if (!cartProducts || cartProducts.length === 0) {
     return (
@@ -57,9 +73,10 @@ const CartClient = () => {
             Taxes and shipping calculated at checkout
           </p>
           <Button
+          custom="cursor-pointer"
             label="Checkout"
             onclick={() => {
-                
+                handleCheckout();
             }}
           />
           <Link

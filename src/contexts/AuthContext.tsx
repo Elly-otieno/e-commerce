@@ -71,14 +71,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem("authUser");
-    toast.success("Successfully logged out");
+    toast("Logging out..."); 
+    
+    setTimeout(() => {
+        setUser(null);
+        localStorage.removeItem("authUser");
 
-    if (location.pathname.startsWith("/dashboard")) {
-      navigate("/");
-    }
-  };
+        if (location.pathname.startsWith("/dashboard")) {
+            navigate("/");
+        }
+        
+        toast.success("Successfully logged out");
+    }, 2000); 
+};
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
