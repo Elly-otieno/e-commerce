@@ -9,6 +9,9 @@ import Login from "../pages/Login";
 import Cart from "../pages/Cart";
 import NotFound from "../pages/NotFound";
 import SingleProduct from "../pages/SingleProduct";
+import AddProducts from "../pages/dashboard/AddProducts";
+import ManageProducts from "../pages/dashboard/ManageProducts";
+import ManageOrders from "../pages/dashboard/ManageOrders";
 
 const Router = () => {
   return (
@@ -22,6 +25,9 @@ const Router = () => {
       <Route element={<PrivateRoute />}>
         <Route path={PATHS.dashboard.index} element={<DashboardIndex />} />
         <Route path={PATHS.dashboard.usersList} element={<UsersList />} />
+        <Route path={PATHS.dashboard.addProducts} element={<AddProducts />} />
+        <Route path={PATHS.dashboard.manageProducts} element={<ManageProducts />} />
+        <Route path={PATHS.dashboard.manageOrders} element={<ManageOrders />} />
       </Route>
     </Routes>
   );

@@ -2,11 +2,12 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { ShoppingCart, Menu, X, LogOut, User } from "lucide-react";
+import { useCart } from "../../hooks/useCart";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
-  const cartItemCount = 5; // Placeholder for now
+  const { cartTotalQty } = useCart();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -46,7 +47,7 @@ const Navbar = () => {
             </button>
           ) : (
             <Link
-              to="/login"
+              to="/login" state={{ from: location.pathname }}
               className="hover:text-gray-200 transition duration-200 hover:underline"
             >
               {/* <User size={20} /> */}
@@ -59,9 +60,9 @@ const Navbar = () => {
         <div className="relative">
           <Link to="/cart">
             <ShoppingCart size={24} />
-            {cartItemCount > 0 && (
-              <span className="absolute top-0 right-0 bg-red-600 text-white rounded-full text-xs px-2 py-1">
-                {cartItemCount}
+            {cartTotalQty > 0 && (
+              <span className="absolute top-[-10px] right-[-10px] bg-red-600 text-white rounded-full text-xs px-2 py-1">
+                {cartTotalQty}
               </span>
             )}
           </Link>
@@ -109,7 +110,7 @@ const Navbar = () => {
             </button>
           ) : (
             <Link
-              to="/login"
+              to="/login" state={{ from: location.pathname }}
               className="block text-white hover:text-gray-200 transition duration-200"
             >
               <User size={20} />

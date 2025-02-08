@@ -19,7 +19,7 @@ const ItemContent: React.FC<ItemContentProps> = ({ item }) => {
             <img src={item.image} alt={item.name} className="object-contain"/>
           </div>
         </Link>
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-center">
           <Link to={`/products/${item.id}`}>{truncateText(item.name)}</Link>
           <div className="w-[70px]">
             <button className="underline text-slate-500" onClick={()=>handleRemoveProductFromCart(item)}>
@@ -28,8 +28,8 @@ const ItemContent: React.FC<ItemContentProps> = ({ item }) => {
           </div>
         </div>
       </div>
-      <div className="justify-self-center font-semibold">{formatPrice(item.price)}</div>
-      <div className="justify-self-center">
+      <div className="font-semibold">{formatPrice(item.price)}</div>
+      <div className="">
         <SetQuantity cartCounter={true} cartProduct={item} handleQtyDecrease={()=>{handleCartQtyDecrease(item)}} handleQtyIncrease={()=>{handleCartQtyIncrease(item)}} />
       </div>
       <div className="justify-self-end">

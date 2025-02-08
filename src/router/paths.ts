@@ -9,6 +9,9 @@ const PATHS = {
     dashboard: {
         index: "/dashboard",
         usersList: "/dashboard/users",
+        addProducts: "/dashboard/add-products",
+        manageProducts: "/dashboard/manage-products",
+        manageOrders: "/dashboard/manage-orders",
     },
     error: '*'
 }

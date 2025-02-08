@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 
 export type CartContextType = {
   cartTotalQty: number;
+  cartTotalAmount: number;
   cartProducts: CartProductType[ ] | null;
   handleAddProductToCart: (product: CartProductType) => void;
   handleRemoveProductFromCart: (product: CartProductType) => void;
@@ -21,13 +22,45 @@ interface Props {
 export const CartContextProvider = (props: Props) => {
   const [cartTotalQty, setCartTotalQty] = useState(0);
   const [cartProducts, setCartProducts] = useState<CartProductType[]>([]);
+  const [ cartTotalAmount, setCartTotalAmount ] = useState(0)
+
+
+  console.log('[DEBUG] Qty', cartTotalQty);
+  console.log('[DEBUG] Amount', cartTotalAmount);
+
+  
+  useEffect(() => {
+    const cartItems = localStorage.getItem("eShopCartItems");
+    const cProducts: CartProductType[] = cartItems ? JSON.parse(cartItems) : [];
+    setCartProducts(cProducts);
+  }, []);
+  
 
   useEffect(()=>{
-    const cartItems: any = localStorage.getItem('eShopCartItems');
-    const cProducts: CartProductType[]  = JSON.parse(cartItems)
+    const getTotals =() => {
 
-    setCartProducts(cProducts)
-  }, [])
+        if (cartProducts) {
+            const { total, qty } = cartProducts?.reduce((acc, item)=>{
+                const itemTotal = item.price * item.quantity
+    
+                acc.total += itemTotal
+                acc.qty +=item.quantity
+    
+                return acc
+            },
+             {
+                total: 0,
+                qty: 0
+            })
+
+            setCartTotalQty(qty)
+            setCartTotalAmount(total)
+        }
+        
+    }
+
+    getTotals()
+  },[cartProducts])
 
   const handleAddProductToCart = useCallback((product: CartProductType)=>{
     setCartProducts((prev) =>{
@@ -59,62 +92,68 @@ export const CartContextProvider = (props: Props) => {
     }
   },[])
 
-  const handleCartQtyIncrease = useCallback((product: CartProductType)=>{
-    let updatedCart;
-
-    if(product.quantity === 20){
-        return toast.error('Ooops! Maximum reached')
-    }  
-
-    if(cartProducts){
-        updatedCart = [...cartProducts]
-
-        const existingIndex = cartProducts.findIndex((item)=>
-            item.id === product.id
-    )
-
-        if(existingIndex > -1){
-            updatedCart[existingIndex].quantity = ++updatedCart[existingIndex].quantity
+  const handleCartQtyIncrease = useCallback((product: CartProductType) => {
+    setCartProducts((prevCart) => {
+      if (!prevCart) return [];
+  
+      const updatedCart = [...prevCart];
+      const existingIndex = updatedCart.findIndex((item) => item.id === product.id);
+  
+      if (existingIndex > -1) {
+        if (updatedCart[existingIndex].quantity >= 20) {
+          toast.error("Ooops! Maximum reached");
+          return prevCart;
         }
+        updatedCart[existingIndex] = {
+          ...updatedCart[existingIndex],
+          quantity: updatedCart[existingIndex].quantity + 1,
+        };
+      }
+  
+      localStorage.setItem("eShopCartItems", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  }, []);
 
-        setCartProducts(updatedCart);
-        localStorage.setItem('eShopCartItems', JSON.stringify(updatedCart))
-    }
-
-  },[])
-
-  const handleCartQtyDecrease = useCallback((product: CartProductType)=>{
-    let updatedCart;
-
-    if(product.quantity === 1){
-        return toast.error('Ooops! Manimum reached')
-    }  
-
-    if(cartProducts){
-        updatedCart = [...cartProducts]
-
-        const existingIndex = cartProducts.findIndex((item)=>
-            item.id === product.id
-    )
-
-        if(existingIndex > -1){
-            updatedCart[existingIndex].quantity = --updatedCart[existingIndex].quantity
+  const handleCartQtyDecrease = useCallback((product: CartProductType) => {
+    setCartProducts((prevCart) => {
+      if (!prevCart) return []; // Prevents null errors
+  
+      const updatedCart = [...prevCart];
+      const existingIndex = updatedCart.findIndex((item) => item.id === product.id);
+  
+      if (existingIndex > -1) {
+        if (updatedCart[existingIndex].quantity === 1) {
+          // Remove item from cart instead of clearing the cart
+          const filteredCart = updatedCart.filter((item) => item.id !== product.id);
+          localStorage.setItem("eShopCartItems", JSON.stringify(filteredCart));
+          toast.success("Product removed from cart");
+          return filteredCart;
         }
+  
+        updatedCart[existingIndex] = {
+          ...updatedCart[existingIndex],
+          quantity: updatedCart[existingIndex].quantity - 1,
+        };
+      }
+  
+      localStorage.setItem("eShopCartItems", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  }, []);
+  
 
-        setCartProducts(updatedCart);
-        localStorage.setItem('eShopCartItems', JSON.stringify(updatedCart))
-    }
-
-  },[])
-
-  const handleClearCart = useCallback(()=>{
-    setCartProducts(null)
-    setCartTotalQty(0)
-    localStorage.setItem('eShopCartItems', JSON.stringify(null))
-  },[cartProducts])
+  const handleClearCart = useCallback(() => {
+    setCartProducts([]);
+    setCartTotalQty(0);
+    setCartTotalAmount(0);
+    localStorage.setItem("eShopCartItems", JSON.stringify([]));
+  }, []);
+  
 
   const value = {
     cartTotalQty,
+    cartTotalAmount,
     cartProducts,
     handleAddProductToCart,
     handleRemoveProductFromCart,
