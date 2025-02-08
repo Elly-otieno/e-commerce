@@ -1,50 +1,121 @@
-# React + TypeScript + Vite
+# Exclusive - Online Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
+**Exclusive** is a fully responsive online store built with React and TypeScript. It features product management, authentication, cart functionality, filtering, and a user-friendly interface.
 
-Currently, two official plugins are available:
+## Features
+### Landing Page
+- **Navigation Bar**: Includes company name, menu items, an interactive cart icon with a counter and a user icon.
+- **Promotional Banner**
+- **Product Listing on Featured page**: Grid-based display with category based filtering.
+- **Testimonials Section**: Displays customer reviews with a rating system.
+- **Footer**: Contains company information, contact details, and social media links.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Product Card Functionality
+- **Interactive Product View**: Clicking navigates to the detailed product page.
+- **Cart Integration**:
+  - Add to cart functionality.
+  - Visual feedback on the cart icon.
+  - Remove from cart option.
+  - Cart count update animation.
 
-## Expanding the ESLint configuration
+### Admin Authentication
+- Secure login page with:
+  - Email and password fields.
+  - Form validation and error handling.
+  - Persistent authentication state.
+- For trials use:
+  - Admin:
+    - **Email**: *admin@example.com*
+    - **Password**: *admin123*
+  - Normal User:
+    - **Email**: *user@example.com*
+    - **Password**: *user123*
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Admin Dashboard
+- **Summary Section**:
+  - Indications of total products, orders and revenue.
+  - Order status comparison charts.
+  - Revenue by category status overview.
+- **Product Management**:
+  - CRUD operations (Create, Read, Update, Delete) for products.
+  - Edit and delete functionalities - For now both the funtiionalities do not update on the database as there is no connection. It just shows on the console.
+  - New product creation form with validation - not updated on database.
 
-- Configure the top-level `parserOptions` property like this:
+## Technologies Used
+- **React (TypeScript)**
+- **React Router** (for navigation)
+- **Tailwind CSS** (for styling)
+- **React Context API** (for global state management)
+- **React Hook Form** (for form validation)
+- **React Hot Toast** (for notifications)
+- **Recharts** (for analytics and dashboard charts)
+- **Faker API** (for mock product data)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Setup Instructions
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/Elly-otieno/e-commerce.git
+   cd e-commerce
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+4. Open the project in your browser:
+   ```
+   http://localhost:5173
+   ```
+
+## Project Structure
+```
+e-commerce/
+│── src/
+│   ├── assets/
+│   ├── context/
+│   ├── components/
+│   │   ├── layout/
+│   │   ├── general/
+│   ├── pages/
+│   │   ├── dashboard/
+│   │   │   ├── AddProducts.tsx
+│   │   │   ├── DashboardIndex.tsx
+│   │   │   ├── ManageOrders.tsx
+│   │   │   ├── ManageProducts.tsx
+│   │   ├── Cart.tsx
+│   │   ├── Landing.tsx
+│   │   ├── NotFound.tsx
+│   │   ├── Home.tsx
+│   │   ├── Products.tsx
+│   │   ├── SingleProduct.tsx
+│   ├── router/
+│   ├── utils/
+│   ├── types/
+│   ├── App.tsx
+│   ├── main.tsx
+│── public/
+│── package.json
+│── README.md
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## API Integration
+- Products fetched from a mock API.
+- Loading and error states handled.
+- Form validation implemented for product creation and edits/updates.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Version Control
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+
+## Deployment
+- The application can be deployed on **Vercel** or **Netlify**.
+
+---
+
+### Contributors
+- **Elly Okoth** - [GitHub Profile](https://github.com/Elly-otieno)
+
+Happy coding! 🚀
