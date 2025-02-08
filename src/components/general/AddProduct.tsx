@@ -79,7 +79,7 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto   p-6">
+    <div className="max-w-4xl mx-auto  p-6"  data-aos="zoom in">
       <h1 className="text-slate-500 font-bold text-3xl text-center  mb-4">
         Add New Product
       </h1>

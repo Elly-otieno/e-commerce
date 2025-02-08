@@ -55,7 +55,7 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="relative max-w-5xl mx-auto p-6">
+    <div className="relative max-w-5xl mx-auto p-6"  data-aos="fade-up">
       <div className="flex overflow-hidden space-x-4 mx-6">
         {testimonials.slice(currentIndex, currentIndex + 3).map((testimonial) => (
           <div key={testimonial.id} className="w-1/3 p-4 bg-white shadow-lg rounded-lg flex flex-col items-center text-center">

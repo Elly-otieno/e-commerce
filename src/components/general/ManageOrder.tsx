@@ -60,7 +60,7 @@ const ManageOrder = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6"  data-aos="fade-up">
       <h2 className="text-2xl font-bold mb-4">Manage Orders</h2>
 
       <table className="w-full">

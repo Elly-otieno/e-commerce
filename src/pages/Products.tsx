@@ -59,7 +59,7 @@ const Products = () => {
   return (
     <div className="p-4">
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-4 justify-center mb-6">
+      <div className="flex flex-wrap gap-4 justify-center mb-6" data-aos="fade-in">
         {categories.map((category) => (
           <button
             key={category}
@@ -76,7 +76,7 @@ const Products = () => {
       </div>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" data-aos="zoom-in">
         {filteredProducts && filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />

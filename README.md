@@ -1,7 +1,7 @@
 # Exclusive - Online Store
 
 ## Project Overview
-**Exclusive** is a responsive online store built with React and TypeScript. It features product management, authentication, cart functionality, filtering, and a user-friendly interface.
+**Exclusive** is a responsive under development online store built with React and TypeScript. It features product management, authentication, cart functionality, filtering, admin dashboard and a user-friendly interface.
 
 ## Features
 ### Landing Page
@@ -51,6 +51,7 @@
 - **React Hot Toast** (for notifications)
 - **Recharts** (for analytics and dashboard charts)
 - **Faker API** (for mock product data)
+- **Lucide React** (for icons)
 
 ## Setup Instructions
 1. Clone the repository:
@@ -106,6 +107,16 @@ e-commerce/
 - Products fetched from a mock API.
 - Loading and error states handled.
 - Form validation implemented for product creation and edits/updates.
+
+## Future Improvements
+
+- Implement a live CRUD operations on product with real endpoint.
+- Add create account.
+- Integrate with a payment gateway.
+- Improve styling and user experience.
+- Add more features like sorting, and searching.
+- Implementing smooth transitions and faster page loads.
+- Add scroll animations to elements.
 
 ## Version Control
 

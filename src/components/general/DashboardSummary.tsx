@@ -44,7 +44,7 @@ const DashboardSummary = () => {
   const COLORS = ["#FF8042", "#0088FE"];
 
   return (
-    <div className="p-6">
+    <div className="p-6"  data-aos="zoom-in">
       <h2 className="text-2xl font-bold mb-4">Dashboard Summary</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div className="p-4 bg-white shadow rounded-lg">

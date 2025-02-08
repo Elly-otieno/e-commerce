@@ -6,10 +6,17 @@ import Router from "./router/Router";
 import { useLocation } from "react-router";
 import Nav from "./components/general/Nav";
 import { useAuth } from "./contexts/AuthContext";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const App = () => {
   const location = useLocation();
   const { user } = useAuth();
+
+  useEffect(()=>{
+    AOS.init({ duration: 1000 });
+  },[])
 
   const showNavOn = ['/dashboard', '/dashboard/add-products', '/dashboard/manage-products', '/dashboard/manage-orders']
   return (

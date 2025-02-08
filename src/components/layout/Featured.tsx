@@ -95,7 +95,7 @@ const Featured = () => {
   }, [countdown]);
 
   return (
-    <div>
+    <div  data-aos="fade-up">
       <div className="flex justify-between items-center my-8">
         <h2 className="text-2xl font-semibold">
           <span className="bg-red-500 text-white px-2 py-1 rounded-md mr-2">

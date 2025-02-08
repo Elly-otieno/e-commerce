@@ -60,7 +60,7 @@ const ManageProduct = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6"  data-aos="fade-up">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Manage Products</h2>
         <Button
